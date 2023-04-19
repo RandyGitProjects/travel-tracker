@@ -28,7 +28,17 @@ const trips = [
     "duration": 17,
     "status": "approved",
     "suggestedActivities": []
-    }
+    },
+    {
+    "id": 83,
+    "userID": 47,
+    "destinationID": 26,
+    "travelers": 1,
+    "date": "2020/05/06",
+    "duration": 11,
+    "status": "pending",
+    "suggestedActivities": []
+    },
 ]
 
 const destinations = [
