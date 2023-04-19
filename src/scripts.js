@@ -9,3 +9,27 @@ import './images/turing-logo.png'
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
+
+//Query Selectors
+var form = document.querySelector(".travel-form")
+
+//Event Listeners
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    displayCalculatedCost();
+  });
+
+//Functions
+function displayCalculatedCost() {
+    var date = new Date(document.querySelector("#date").value);
+    var duration = document.querySelector("#duration").value;
+    console.log(duration)
+    var travelers = document.querySelector("#travelers").value;
+    var destination = document.querySelector("#destination").value;
+    var costPerDay = 100;
+    var costPerPerson = costPerDay * duration;
+    var totalCost = costPerPerson * travelers;
+
+    document.querySelector("#cost").value = "$" + totalCost.toFixed(2);
+    return false
+}
