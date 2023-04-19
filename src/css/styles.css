@@ -1,3 +1,86 @@
-body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+html {
+  background-color: #202030;
 }
+/* Style the form */
+form {
+  background-color: #B0A990;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  height: 37vh;
+  width: 15vw;
+}
+
+
+label {
+  display: inline-block;
+  width: 100px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+input[type="date"], input[type="number"], input[type="text"], select {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 5px;
+  width: 100px;
+  font-size: 12px;
+}
+/* End of Form */
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Hovers */
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* Media Scroller */
+.media-scroller {
+  color: white;
+  --spacer: 1rem;
+  display: grid;
+  gap: var(--spacer);
+  grid-auto-flow: column;
+  grid-auto-columns: 17%;
+  padding: 0 var(--spacer) var(--spacer);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.media-element {
+  background-color: #3e8e41;
+  border: 1px solid #B0A990;
+  display: grid;
+  grid-template-rows: min-content;
+  gap: var(--spacer);
+  padding: var(--spacer);
+  background: var(--surface-2);
+  border-radius: var(--radius-2);
+}
+
+.media-element > img {
+  border: 1px solid black;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* text styling for media scroller */
+.section-title {
+  color: #B0A990;
+  font-size: xx-large;
+  font-weight: 300;
+}
+
+/** color palette #202030 #39304A #635C51 #7D7461 #B0A990 **/
