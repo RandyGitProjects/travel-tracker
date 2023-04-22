@@ -51,46 +51,64 @@ input[type="submit"]:hover {
 }
 
 /* Media Scroller */
+.media-element {
+  display: inline-flex;
+  margin-right: 16px;
+  vertical-align: top;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  background: 10px;
+  border-radius: 10px;
+}
+
 .media-scroller {
+  background-color: #B0A990;
   color: white;
-  --spacer: 1rem;
-  display: grid;
-  gap: var(--spacer);
-  grid-auto-flow: column;
-  grid-auto-columns: 17%;
-  padding: 0 var(--spacer) var(--spacer);
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  white-space: nowrap;
+  width: 100%;
 }
 
-.media-element {
-  background-color: #3e8e41;
-  border: 1px solid #B0A990;
-  display: grid;
-  grid-template-rows: min-content;
-  gap: var(--spacer);
-  padding: var(--spacer);
-  background: var(--surface-2);
-  border-radius: var(--radius-2);
-}
-
-.media-element > img {
+.card > img {
   border: 1px solid black;
-  inline-size: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16/9;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: cover;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-.media-element {
-  background-color: #39304A;
+.card{
+  background-color: #202030;
+  height: 300px;
+  width: 300px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+
 }
 
 /* text styling for media scroller */
-.section-title {
-  color: #202030;
-  font-size: xx-large;
+.card-info {
+  color: white;
+  font-size: medium;
   font-weight: 300;
   font-weight: bold;
+  text-align: center;
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; 
+  margin: auto; 
+  width: fit-content;
+  z-index: 2;
+  padding-bottom: 25px;
 }
 
 .main-title {
