@@ -34,6 +34,10 @@ class Trips {
         }, 0);
         return (totalCost * 1.10).toFixed();
       }
+      
+    addTrip(newTrip) {
+        this.trips.push(newTrip)
+    }
   }
 
 export default Trips
