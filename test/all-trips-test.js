@@ -95,7 +95,7 @@ describe('Trips', function () {
     it('should be able to calculate total cost of all trips by user and include 10% agent fee', function () {
         const traveler = new Traveler(mock.travelers[2])
         const destinations = new Destinations(mock.destinations)
-        expect(trip1.calculateTripCost(traveler, destinations)).to.equal(15032)
+        expect(trip1.calculateTripCost(traveler, destinations)).to.equal('15032')
     })
     
 })
