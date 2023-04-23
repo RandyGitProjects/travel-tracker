@@ -35,7 +35,7 @@ input[type="date"], input[type="number"], input[type="text"], select {
   font-size: 12px;
 }
 /* End of Form */
-input[type="submit"] {
+input[type="submit"], .book-trip {
   background-color: #4CAF50;
   color: white;
   padding: 5px 10px;
@@ -51,7 +51,7 @@ input[type="submit"]:hover {
 }
 
 /* Media Scroller */
-.media-element {
+.accepted-element, .pending-element {
   display: inline-flex;
   margin-right: 16px;
   vertical-align: top;
@@ -140,6 +140,10 @@ input[type="submit"]:hover {
   margin-top: 5px;
   margin-left: auto;
   width: 35vw;
+}
+
+h2 {
+  font-size: 50px;
 }
 
 /** color palette #202030 #39304A #635C51 #7D7461 #B0A990 **/
