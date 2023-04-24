@@ -1,5 +1,5 @@
 html {
-  background-color: #7D7461;
+  background-color: #c19c4d;
 }
 
 body{
@@ -7,12 +7,71 @@ body{
 }
 /* Style the form */
 form {
-  background-color: #202030;
+  position: relative;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  background-color: #B0A990;
   padding: 20px;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   height: 37vh;
   width: 15vw;
+}
+
+.travel-form {
+  width: 90vw;
+  height: 5vh;
+  display: flex;
+  justify-content: space-between;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  background-color: #B0A990;
+  margin-top: 10px;
+  margin-left: 50px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.form-box {
+  margin-left: 600px;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #202030;
+  margin: 30px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  height: 45px;
+  background-color: #202030;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  color: white;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.form-box h2 {
+  font-size: 2em;
+  color: #202030;
+  margin-left: 85px;
 }
 
 
@@ -22,8 +81,13 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
   font-size: 16px;
-  color: white
+  color: rgb(0, 0, 0);
 }
+
+#password, #username {
+  margin-right: 50px;
+}
+
 
 
 input[type="date"], input[type="number"], input[type="text"], select {
@@ -38,7 +102,6 @@ input[type="date"], input[type="number"], input[type="text"], select {
 input[type="submit"], .book-trip {
   background-color: #4CAF50;
   color: white;
-  padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -46,7 +109,7 @@ input[type="submit"], .book-trip {
 }
 
 /* Hovers */
-input[type="submit"]:hover {
+input[type="submit"]:hover, .book-trip:hover {
   background-color: #3e8e41;
 }
 
@@ -60,6 +123,9 @@ input[type="submit"]:hover {
   padding: 10px;
   background: 10px;
   border-radius: 10px;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
 }
 
 .media-scroller {
@@ -70,6 +136,9 @@ input[type="submit"]:hover {
   overflow-x: scroll;
   white-space: nowrap;
   width: 100%;
+  border-radius: 10px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
 }
 
 .card > img {
@@ -127,6 +196,10 @@ input[type="submit"]:hover {
   margin-bottom: 0;
   padding-right: 100px;
   height: 25vh;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
 }
 
 .total-trips, .amount-trips {
@@ -146,4 +219,13 @@ h2 {
   font-size: 50px;
 }
 
-/** color palette #202030 #39304A #635C51 #7D7461 #B0A990 **/
+.hidden-page {
+  display: none;
+}
+
+.error {
+  font-size: medium;
+  font-weight: 600;
+  color: red;
+  width: 300px;
+}

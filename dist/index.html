@@ -5,16 +5,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
   <title>Travel Tracker</title>
 </head>
 <body>
   <header>
+  <div class="hidden-page">
   <h1 class="main-title"> Welcome back to<br>Odyssey Vacations,<br>Randy Cisneros!</h1>
     <span class="total-trips">You went on 13 trips this year!</span>
     <span class="amount-trips">You spent a total of $300,000 this year on trips.</span>
+  </div>
   </header>
-  <form class="travel-form">
+  <div class="wrapper">
+    <div class="form-box login">
+      <h2 class="login-title">Login</h2>
+      <form id="form" action="/">
+        <div class="input-box">
+          <span class="icon"></span>
+          <input id="username" type="text" name="username" required>
+          <label id="username"for="username">Username</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"></span>
+          <input id="password" type="text" name="password" required>
+          <label id="password"for="password">Password</label>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+        <span class="error"></span>
+      </form>
+    </div>
+  </div>
+  <form class="travel-form hidden-page">
 		<label for="date">Date:</label>
 		<input type="date" id="date" name="date"><br><br>
 		<label for="duration">Duration:</label>
@@ -29,16 +49,17 @@
     <input type="text" id="cost" name="cost" readonly>
     <button type="button" class="book-trip">Book Trip</button>
 	</form>
-  <h2 class="section-title">Past Trips</h2>
-    <div class="media-scroller">
+  <h2 class="section-title hidden-page">Past Trips</h2>
+    <div class="media-scroller hidden-page">
       <div class="accepted-element" tabindex="0">
       </div>
     </div>
-    <h2 class="section-title">Pending Trips</h2>
-    <div class="media-scroller">
+    <h2 class="section-title hidden-page">Pending Trips</h2>
+    <div class="media-scroller hidden-page">
       <div class="pending-element" tabindex="0">
       </div>
     </div>
+  </div>
   <script src="bundle.js"></script>
 </body>
 </html>
