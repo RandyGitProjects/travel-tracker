@@ -1,18 +1,8 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
 import apiCalls from '../src/data/apiCalls'
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 import Trips from '../src/all-trips'
 import Destinations from './all-destinations';
-import Traveler from './all-travelers';
-// import singleTraveler from './single-traveler';
-
-
-console.log('This is the JavaScript entry file - your code begins here.');
 
 //Query Selectors
 const form = document.querySelector(".travel-form")
@@ -27,9 +17,14 @@ const formTravelers = document.querySelector("#travelers")
 const formEstimation = document.querySelector("#cost")
 const bookTrip = document.querySelector(".book-trip")
 const formDate = document.querySelector("#date")
+const showHidden = document.querySelectorAll(".hidden-page")
+const loginForm = document.querySelector(".login")
+const username = document.querySelector("#username")
+const password = document.querySelector("#password")
+const errorElement = document.querySelector(".error")
 
 //Global Variables
-let allTrips, allDestinations, allTravelers
+let allTrips, allDestinations
 
 //Event Listeners
 
@@ -38,9 +33,8 @@ window.addEventListener('load', () => {
   Promise.all(apiCalls)
     .then((apiCallsArray) => {
       const traveler = apiCallsArray[0].travelers
-      const singleTraveler = apiCallsArray[1].traveler //not working atm 
-      const trips = apiCallsArray[2].trips
-      const destinations = apiCallsArray[3].destinations
+      const trips = apiCallsArray[1].trips
+      const destinations = apiCallsArray[2].destinations
       displayTripCardsApproved(trips, destinations, traveler)
       displayTripCardsPending(trips, destinations, traveler)
       displayTravelerName(traveler);
@@ -52,65 +46,107 @@ window.addEventListener('load', () => {
     .catch(error => console.log(error, "error"))
 })
 
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
   Promise.all(apiCalls)
     .then((apiCallsArray) => {
-      const destinations = apiCallsArray[3].destinations
+      const destinations = apiCallsArray[2].destinations
       displayCalculatedCost(destinations);
     })
     .catch(error => console.log(error, "error"))
 });
 
-bookTrip.addEventListener("click", function(event) {
+loginForm.addEventListener("submit", function (event) {
   event.preventDefault()
-  Promise.all(apiCalls)
+  if (!username.value.includes('traveler') || !password.value || password.value !== "travel") {
+    errorElement.innerText = 'Invalid Username or Password'
+    return
+  } else {
+    Promise.all(apiCalls)
+      .then((apiCallsArray) => {
+        console.log(apiCallsArray)
+        const trips = apiCallsArray[1].trips
+        const destinations = apiCallsArray[2].destinations
+        const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === Number(username.value.slice(8)))
+        successfulLogin()
+        displayTripCardsApproved(trips, destinations, singleTraveler)
+        displayTripCardsPending(trips, destinations, singleTraveler)
+        displayTravelerName(singleTraveler);
+        displayTotalTrips(singleTraveler, trips)
+        displayAmountTrips(singleTraveler, trips, destinations)
+        displayTripsForForm(destinations)
+        updateDateCalendar()
+      })
+      .catch(error => {
+        console.log(error)
+        if (error.message === 'Traveler not found') {
+          errorElement.innerText = error
+        } else {
+          errorElement.innerText = 'Invalid Username or Password'
+        }
+      })
+  }
+})
+
+bookTrip.addEventListener("click", function (event) {
+  event.preventDefault()
+  const getTravelerIdURL = fetch("http://localhost:3001/api/v1/travelers/" + Number(username.value.slice(8)))
+    .then(response => response.json())
+
+  Promise.all(apiCalls.concat(getTravelerIdURL))
     .then((apiCallsArray) => {
-      const travelers = apiCallsArray[0].travelers
-      const trips = apiCallsArray[2].trips
-      const destinations = apiCallsArray[3].destinations
-      submitTrip(trips, destinations, travelers)
+      const trips = apiCallsArray[1].trips
+      const destinations = apiCallsArray[2].destinations
+      const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === Number(username.value.slice(8)))
+      submitTrip(trips, destinations, singleTraveler)
     })
     .catch(error => console.log(error, "error"))
 })
 
 function submitTrip(trips, destinations, traveler) {
-  var date = (document.querySelector("#date").value).split('-').join('/')
-  var duration = parseFloat(document.querySelector("#duration").value);
-  var inputTravelers = parseFloat(document.querySelector("#travelers").value);
-  var destination = parseFloat(document.querySelector("#destination").value);
+  var date = (formDate.value).split('-').join('/')
+  var duration = parseFloat(formDuration.value);
+  var inputTravelers = parseFloat(formTravelers.value);
+  var destination = parseFloat(formDestinations.value);
 
   if (!formDate.value || !formDestinations.value || !formTravelers.value || !formDuration.value) {
     window.alert("At least one of the required values are missing or invalid, try again please!")
   } else {
     fetch("http://localhost:3001/api/v1/trips", {
-    method: "POST",
-    body: JSON.stringify({
-    id: Number(Date.now()),
-    userID: traveler[2].id,
-    destinationID: destination,
-    travelers: inputTravelers,
-    date: date,
-    duration: duration,
-    status: 'pending',
-    suggestedActivities: []
-  }),
-  headers: {
-    "Content-Type": "application/json"
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-  allTrips.addTrip(data.newTrip)
-  displayTripCardsPending(trips, destinations, traveler)
-  displayTotalTrips(traveler, trips)
-  displayAmountTrips(traveler, trips, destinations)
-  displayCalculatedCost(destinations)
-  resetForm()
-  })
-  .catch(error => console.log(error))
+      method: "POST",
+      body: JSON.stringify({
+        id: Number(Date.now()),
+        userID: traveler.id,
+        destinationID: destination,
+        travelers: inputTravelers,
+        date: date,
+        duration: duration,
+        status: 'pending',
+        suggestedActivities: []
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        allTrips.addTrip(data.newTrip)
+        displayTripCardsPending(trips, destinations, traveler)
+        displayTotalTrips(traveler, trips)
+        displayAmountTrips(traveler, trips, destinations)
+        displayCalculatedCost(destinations)
+        resetForm()
+      })
+      .catch(error => console.log(error))
   }
 };
+
+const successfulLogin = () => {
+  showHidden.forEach(page => {
+    page.classList.remove('hidden-page');
+  })
+  loginForm.classList.add('hidden-page')
+}
 
 function updateDateCalendar() {
   let today = new Date().toLocaleDateString('en-CA')
@@ -129,37 +165,36 @@ const displayCalculatedCost = (destinations) => {
   allDestinations = new Destinations(destinations)
   const totalCost = allDestinations.getDestinationCost(Number(formDestinations.value), Number(formTravelers.value), Number(formDuration.value))
   formEstimation.value = "$" + totalCost.toFixed(2);
-  return false 
+  return false
 };
 
 const displayTripsForForm = (destinations) => {
-  formDestinations.innerHTML =''
+  formDestinations.innerHTML = ''
   destinations.forEach((destination) => {
     formDestinations.innerHTML += `<option id="${destination.id}" value="${destination.id}">${destination.destination}</option>`
-   })
+  })
 };
 
 const displayAmountTrips = (traveler, trips, destinations) => {
   allTrips = new Trips(trips)
   destinations = new Destinations(destinations)
-  amountTrips.innerHTML = `You spent a total of $${parseFloat(allTrips.calculateTripCost(traveler[2], destinations)).toLocaleString()} on trips.`
+  amountTrips.innerHTML = `You spent a total of $${parseFloat(allTrips.calculateTripCost(traveler, destinations)).toLocaleString()} on trips.`
 };
 
 const displayTotalTrips = (traveler, trips) => {
   allTrips = new Trips(trips)
-  totalTrips.innerHTML = `You went on ${allTrips.getTotalTrips(traveler[2])} total trips!`
+  totalTrips.innerHTML = `You went on ${allTrips.getTotalTrips(traveler)} total trips!`
 };
 
 const displayTravelerName = (traveler) => {
-  travelerName.innerHTML = `Welcome back to<br>Odyssey Vacations,<br>${traveler[2].name}!</h1>`
+  travelerName.innerHTML = `Welcome back to<br>Odyssey Vacations,<br>${traveler.name}!</h1>`
 };
 
 const displayTripCardsApproved = (trips, destinations, traveler) => {
   allTrips = new Trips(trips)
   allDestinations = new Destinations(destinations)
-  // allTravelers = new Travelers(traveler)
-    const travelerTrips = allTrips.getTripsByTravelerId(traveler[2]).filter((trip) => trip.status === 'approved')
-    travelerTrips.forEach((trip) => {
+  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === 'approved')
+  travelerTrips.forEach((trip) => {
     const travelerDest = allDestinations.getDestinationById(trip.destinationID)
     acceptedMediaElement.innerHTML += `<div class="card" tabindex="0">
                                 <img src="${travelerDest.image}" class="card-image" alt="${travelerDest.alt}">
@@ -171,10 +206,9 @@ const displayTripCardsApproved = (trips, destinations, traveler) => {
 const displayTripCardsPending = (trips, destinations, traveler) => {
   allTrips = new Trips(trips)
   allDestinations = new Destinations(destinations)
-  // allTravelers = new Travelers(traveler)
   pendingMediaElement.innerHTML = ''
-    const travelerTrips = allTrips.getTripsByTravelerId(traveler[2]).filter((trip) => trip.status === 'pending')
-    travelerTrips.forEach((trip) => {
+  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === 'pending')
+  travelerTrips.forEach((trip) => {
     const travelerDest = allDestinations.getDestinationById(trip.destinationID)
     pendingMediaElement.innerHTML += `<div class="card" tabindex="0">
                                 <img src="${travelerDest.image}" class="card-image" alt="${travelerDest.alt}">
@@ -182,4 +216,3 @@ const displayTripCardsPending = (trips, destinations, traveler) => {
                               </div>`
   });
 };
-
