@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
       displayTripsForForm(destinations);
       updateDateCalendar();
     })
-    .catch(error => console.log(error, "error"))
+    .catch(error => alert(error, "error"))
 })
 
 form.addEventListener("submit", function (event) {
@@ -51,7 +51,7 @@ form.addEventListener("submit", function (event) {
       const destinations = apiCallsArray[2].destinations
       displayCalculatedCost(destinations);
     })
-    .catch(error => console.log(error, "error"))
+    .catch(error => alert(error, "error"))
 });
 
 loginForm.addEventListener("submit", function (event) {
@@ -63,7 +63,6 @@ loginForm.addEventListener("submit", function (event) {
   } else {
     Promise.all(apiCalls)
       .then((apiCallsArray) => {
-        console.log(apiCallsArray)
         const trips = apiCallsArray[1].trips
         const destinations = apiCallsArray[2].destinations
         const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === userIdNumber)
@@ -77,7 +76,6 @@ loginForm.addEventListener("submit", function (event) {
         updateDateCalendar();
       })
       .catch(error => {
-        console.log(error)
         if (error.message === "Traveler not found") {
           errorElement.innerText = error
         } else {
@@ -89,21 +87,18 @@ loginForm.addEventListener("submit", function (event) {
 
 bookTrip.addEventListener("click", function (event) {
   event.preventDefault()
-  const getTravelerIdURL = fetch("http://localhost:3001/api/v1/travelers/" + Number(username.value.slice(8)))
-    .then(response => response.json())
-
-  Promise.all(apiCalls.concat(getTravelerIdURL))
+  Promise.all(apiCalls)
     .then((apiCallsArray) => {
       const trips = apiCallsArray[1].trips
       const destinations = apiCallsArray[2].destinations
       const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === Number(username.value.slice(8)))
       submitTrip(trips, destinations, singleTraveler);
     })
-    .catch(error => console.log(error, "error"))
+    .catch(error => alert(error, "error"))
 })
 
 //Functions
-function submitTrip(trips, destinations, traveler) {
+const submitTrip = (trips, destinations, traveler) => {
   let date = (formDate.value).split("-").join("/")
   let duration = parseFloat(formDuration.value);
   let inputTravelers = parseFloat(formTravelers.value);
@@ -137,7 +132,7 @@ function submitTrip(trips, destinations, traveler) {
         displayCalculatedCost(destinations)
         resetForm()
       })
-      .catch(error => console.log(error))
+      .catch(error => alert(error))
   }
 };
 
