@@ -1,47 +1,45 @@
 
-import './css/styles.css';
-import apiCalls from '../src/data/apiCalls'
-import Trips from '../src/all-trips'
-import Destinations from './all-destinations';
+import "./css/styles.css";
+import apiCalls from "../src/data/apiCalls";
+import Trips from "../src/all-trips";
+import Destinations from "./all-destinations";
 
 //Query Selectors
-const form = document.querySelector(".travel-form")
-const acceptedMediaElement = document.querySelector(".accepted-element")
-const pendingMediaElement = document.querySelector(".pending-element")
-const travelerName = document.querySelector(".main-title")
-const totalTrips = document.querySelector(".total-trips")
-const amountTrips = document.querySelector(".amount-trips")
-const formDestinations = document.querySelector("#destination")
-const formDuration = document.querySelector("#duration")
-const formTravelers = document.querySelector("#travelers")
-const formEstimation = document.querySelector("#cost")
-const bookTrip = document.querySelector(".book-trip")
-const formDate = document.querySelector("#date")
-const showHidden = document.querySelectorAll(".hidden-page")
-const loginForm = document.querySelector(".login")
-const username = document.querySelector("#username")
-const password = document.querySelector("#password")
-const errorElement = document.querySelector(".error")
+const form = document.querySelector(".travel-form");
+const acceptedMediaElement = document.querySelector(".accepted-element");
+const pendingMediaElement = document.querySelector(".pending-element");
+const travelerName = document.querySelector(".main-title");
+const totalTrips = document.querySelector(".total-trips");
+const amountTrips = document.querySelector(".amount-trips");
+const formDestinations = document.querySelector("#destination");
+const formDuration = document.querySelector("#duration");
+const formTravelers = document.querySelector("#travelers");
+const formEstimation = document.querySelector("#cost");
+const bookTrip = document.querySelector(".book-trip");
+const formDate = document.querySelector("#date");
+const showHidden = document.querySelectorAll(".hidden-page");
+const loginForm = document.querySelector(".login");
+const username = document.querySelector("#username");
+const password = document.querySelector("#password");
+const errorElement = document.querySelector(".error");
 
 //Global Variables
 let allTrips, allDestinations
 
 //Event Listeners
-
-// Functions
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   Promise.all(apiCalls)
     .then((apiCallsArray) => {
       const traveler = apiCallsArray[0].travelers
       const trips = apiCallsArray[1].trips
       const destinations = apiCallsArray[2].destinations
-      displayTripCardsApproved(trips, destinations, traveler)
-      displayTripCardsPending(trips, destinations, traveler)
+      displayTripCardsApproved(trips, destinations, traveler);
+      displayTripCardsPending(trips, destinations, traveler);
       displayTravelerName(traveler);
-      displayTotalTrips(traveler, trips)
-      displayAmountTrips(traveler, trips, destinations)
-      displayTripsForForm(destinations)
-      updateDateCalendar()
+      displayTotalTrips(traveler, trips);
+      displayAmountTrips(traveler, trips, destinations);
+      displayTripsForForm(destinations);
+      updateDateCalendar();
     })
     .catch(error => console.log(error, "error"))
 })
@@ -57,9 +55,10 @@ form.addEventListener("submit", function (event) {
 });
 
 loginForm.addEventListener("submit", function (event) {
+  const userIdNumber = Number(username.value.slice(8))
   event.preventDefault()
-  if (!username.value.includes('traveler') || !password.value || password.value !== "travel") {
-    errorElement.innerText = 'Invalid Username or Password'
+  if (!username.value.includes("traveler") || !password.value || password.value !== "travel" || userIdNumber < 1 || userIdNumber > 50) {
+    errorElement.innerText = "Invalid Username or Password"
     return
   } else {
     Promise.all(apiCalls)
@@ -67,22 +66,22 @@ loginForm.addEventListener("submit", function (event) {
         console.log(apiCallsArray)
         const trips = apiCallsArray[1].trips
         const destinations = apiCallsArray[2].destinations
-        const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === Number(username.value.slice(8)))
-        successfulLogin()
-        displayTripCardsApproved(trips, destinations, singleTraveler)
-        displayTripCardsPending(trips, destinations, singleTraveler)
+        const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === userIdNumber)
+        successfulLogin();
+        displayTripCardsApproved(trips, destinations, singleTraveler);
+        displayTripCardsPending(trips, destinations, singleTraveler);
         displayTravelerName(singleTraveler);
-        displayTotalTrips(singleTraveler, trips)
-        displayAmountTrips(singleTraveler, trips, destinations)
-        displayTripsForForm(destinations)
-        updateDateCalendar()
+        displayTotalTrips(singleTraveler, trips);
+        displayAmountTrips(singleTraveler, trips, destinations);
+        displayTripsForForm(destinations);
+        updateDateCalendar();
       })
       .catch(error => {
         console.log(error)
-        if (error.message === 'Traveler not found') {
+        if (error.message === "Traveler not found") {
           errorElement.innerText = error
         } else {
-          errorElement.innerText = 'Invalid Username or Password'
+          errorElement.innerText = "Invalid Username or Password"
         }
       })
   }
@@ -98,16 +97,17 @@ bookTrip.addEventListener("click", function (event) {
       const trips = apiCallsArray[1].trips
       const destinations = apiCallsArray[2].destinations
       const singleTraveler = apiCallsArray[0].travelers.find(traveler => traveler.id === Number(username.value.slice(8)))
-      submitTrip(trips, destinations, singleTraveler)
+      submitTrip(trips, destinations, singleTraveler);
     })
     .catch(error => console.log(error, "error"))
 })
 
+//Functions
 function submitTrip(trips, destinations, traveler) {
-  var date = (formDate.value).split('-').join('/')
-  var duration = parseFloat(formDuration.value);
-  var inputTravelers = parseFloat(formTravelers.value);
-  var destination = parseFloat(formDestinations.value);
+  let date = (formDate.value).split("-").join("/")
+  let duration = parseFloat(formDuration.value);
+  let inputTravelers = parseFloat(formTravelers.value);
+  let destination = parseFloat(formDestinations.value);
 
   if (!formDate.value || !formDestinations.value || !formTravelers.value || !formDuration.value) {
     window.alert("At least one of the required values are missing or invalid, try again please!")
@@ -121,7 +121,7 @@ function submitTrip(trips, destinations, traveler) {
         travelers: inputTravelers,
         date: date,
         duration: duration,
-        status: 'pending',
+        status: "pending",
         suggestedActivities: []
       }),
       headers: {
@@ -143,13 +143,13 @@ function submitTrip(trips, destinations, traveler) {
 
 const successfulLogin = () => {
   showHidden.forEach(page => {
-    page.classList.remove('hidden-page');
+    page.classList.remove("hidden-page");
   })
-  loginForm.classList.add('hidden-page')
+  loginForm.classList.add("hidden-page")
 }
 
 function updateDateCalendar() {
-  let today = new Date().toLocaleDateString('en-CA')
+  let today = new Date().toLocaleDateString("en-CA")
   formDate.setAttribute("min", today)
 };
 
@@ -169,9 +169,9 @@ const displayCalculatedCost = (destinations) => {
 };
 
 const displayTripsForForm = (destinations) => {
-  formDestinations.innerHTML = ''
+  formDestinations.innerHTML = ""
   destinations.forEach((destination) => {
-    formDestinations.innerHTML += `<option id="${destination.id}" value="${destination.id}">${destination.destination}</option>`
+  formDestinations.innerHTML += `<option id="${destination.id}" value="${destination.id}">${destination.destination}</option>`
   })
 };
 
@@ -193,7 +193,7 @@ const displayTravelerName = (traveler) => {
 const displayTripCardsApproved = (trips, destinations, traveler) => {
   allTrips = new Trips(trips)
   allDestinations = new Destinations(destinations)
-  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === 'approved')
+  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === "approved")
   travelerTrips.forEach((trip) => {
     const travelerDest = allDestinations.getDestinationById(trip.destinationID)
     acceptedMediaElement.innerHTML += `<div class="card" tabindex="0">
@@ -206,8 +206,8 @@ const displayTripCardsApproved = (trips, destinations, traveler) => {
 const displayTripCardsPending = (trips, destinations, traveler) => {
   allTrips = new Trips(trips)
   allDestinations = new Destinations(destinations)
-  pendingMediaElement.innerHTML = ''
-  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === 'pending')
+  pendingMediaElement.innerHTML = ""
+  const travelerTrips = allTrips.getTripsByTravelerId(traveler).filter((trip) => trip.status === "pending")
   travelerTrips.forEach((trip) => {
     const travelerDest = allDestinations.getDestinationById(trip.destinationID)
     pendingMediaElement.innerHTML += `<div class="card" tabindex="0">

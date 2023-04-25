@@ -32,6 +32,10 @@ describe('Destinations', function () {
           })
     })
 
+    it('should return undefined when searching for destination with wrong id', function () {
+        expect(allDestinations.getDestinationById(99)).to.equal(undefined)
+        })
+
     it('should be able to calculate cost of trip of user inputs and include 10% agent fee', function () {
         const destinationID = 22
         const inputDuration = 3

@@ -5,6 +5,7 @@ html {
 body{
   margin: 0;
 }
+
 /* Style the form */
 form {
   position: relative;
@@ -74,7 +75,6 @@ form {
   margin-left: 85px;
 }
 
-
 label {
   display: inline-block;
   width: 100px;
@@ -86,9 +86,8 @@ label {
 
 #password, #username {
   margin-right: 50px;
+  width: 100%;
 }
-
-
 
 input[type="date"], input[type="number"], input[type="text"], select {
   padding: 5px;
@@ -98,10 +97,10 @@ input[type="date"], input[type="number"], input[type="text"], select {
   width: 100px;
   font-size: 12px;
 }
-/* End of Form */
+
 input[type="submit"], .book-trip {
   background-color: #4CAF50;
-  color: white;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
