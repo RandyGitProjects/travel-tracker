@@ -17,11 +17,12 @@ One of the key features of Odyssey Vacations is the ability to explore destinati
 
 ## Preview
 ![Preview Page](https://media.giphy.com/media/2xqvn3rzLeGRkHQEz6/giphy.gif)
+![Preview Page](https://media.giphy.com/media/gOnwlCmz7EvX0HAJ8z/giphy.gif)
 
 ---
 
 ## Contributors 
-Randy L Cisneros Jr [GitHub](https://github.com/RandyGitProjects) | [LinkedIn](https://www.linkedin.com/in/randy-cisneros-17006a191/)
+Randy L Cisneros Jr [GitHub](https://github.com/RandyGitProjects) | [LinkedIn](https://media.giphy.com/media/3tmkPSv2rdk89diRZ4/giphy.gif)
 
 ---
 
