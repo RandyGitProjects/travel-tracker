@@ -22,7 +22,7 @@ One of the key features of Odyssey Vacations is the ability to explore destinati
 ---
 
 ## Contributors 
-Randy L Cisneros Jr [GitHub](https://github.com/RandyGitProjects) | [LinkedIn](https://media.giphy.com/media/3tmkPSv2rdk89diRZ4/giphy.gif)
+Randy L Cisneros Jr [GitHub](https://github.com/RandyGitProjects) | [LinkedIn](https://www.linkedin.com/in/randy-cisneros-17006a191/)
 
 ---
 
