@@ -3,7 +3,6 @@ Odyssey Vacations is a user-friendly application that is designed to make travel
 
 One of the key features of Odyssey Vacations is the ability to explore destinations that are offered through the travel agency. Users can browse through a wide range of destinations and choose the one that best suits their travel needs. Once a destination is selected, the application calculates the cost of the trip, making it easy for users to budget and plan their travel.
 
-Overall, Odyssey Vacations is an ideal application for anyone looking to book a trip and explore new destinations. Its user-friendly interface and personalized experience make it a must-have for any traveler.
 ---
 ## Set up
 
